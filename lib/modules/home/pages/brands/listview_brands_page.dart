@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tako_dashbroad/modules/common/widgets/appbar_design.dart';
+import 'package:tako_dashbroad/modules/home/pages/brands/branchs/edit_or_addNew_branch.dart';
 import 'package:tako_dashbroad/modules/home/pages/brands/edit_or_addNew_brand.dart';
 import 'package:tako_dashbroad/util/common/screen_util.dart';
 import 'package:tako_dashbroad/util/theme/app_colors.dart';
@@ -30,7 +31,7 @@ class ListBrandsPage extends StatelessWidget {
               if (isSuccess) {
                 Get.toNamed(Routes.BRANCHS_OF_BRAND);
               } else {
-                Get.toNamed(Routes.EMPTY);
+                Get.to(()=> EditOrAddBranch(brandId: _homeController.listBrands.value[index].brandId ?? "", branchID: "",));
               }
             },
             onTapEdit: (){

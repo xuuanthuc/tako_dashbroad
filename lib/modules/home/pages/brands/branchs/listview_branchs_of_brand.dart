@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tako_dashbroad/modules/common/lazy_load_widget.dart';
 import 'package:tako_dashbroad/modules/common/widgets/appbar_design.dart';
+import 'package:tako_dashbroad/modules/home/pages/brands/branchs/edit_or_addNew_branch.dart';
 import 'package:tako_dashbroad/util/theme/app_colors.dart';
 
 import '../../../../../app_pages.dart';
 import '../../../home_controller.dart';
-
 
 class ListBranchsOfBrandPage extends StatelessWidget {
   ListBranchsOfBrandPage({Key? key}) : super(key: key);
@@ -15,29 +15,59 @@ class ListBranchsOfBrandPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>Scaffold(
-      backgroundColor: white,
-      appBar: appbarDesignSimple(title: '${_homeController.labelBrand.value} (${_homeController.listBranchs.length})', addNewItem: (){}),
-      body: _homeController.isLoading.value == true
+    return Obx(
+      () => Scaffold(
+        backgroundColor: white,
+        appBar: appbarDesignSimple(
+            title:
+                '${_homeController.labelBrand.value} (${_homeController.listBranchs.length})',
+            addNewItem: () => Get.to(() => EditOrAddBranch(
+                  brandId: _homeController.listBranchs.value[0].brandId ?? "",
+                  branchID: "",
+                ))),
+        body: _homeController.isLoading.value == true
             ? LazyLoad()
             : ListView.builder(
                 itemBuilder: (context, index) {
                   return branchItemManagement(
-                    ontap: ()async {
+                    ontap: () async {
                       var isSuccess = await _homeController.getMenuOfBranch(
-                      brand: _homeController.listBranchs.value[index].brandId ?? "",
-                      idBranch: _homeController.listBranchs.value[index].branchId?? "",
-                      branchName:_homeController.listBranchs.value[index].branchName?? "",
-                      branchAddress: _homeController.listBranchs.value[index].address?? "",
-                      branchDistrict: _homeController.listBranchs.value[index].district?? "",
-                    );
-                      if(isSuccess){
+                        brand:
+                            _homeController.listBranchs.value[index].brandId ??
+                                "",
+                        idBranch:
+                            _homeController.listBranchs.value[index].branchId ??
+                                "",
+                        branchName: _homeController
+                                .listBranchs.value[index].branchName ??
+                            "",
+                        branchAddress:
+                            _homeController.listBranchs.value[index].address ??
+                                "",
+                        branchDistrict:
+                            _homeController.listBranchs.value[index].district ??
+                                "",
+                      );
+                      if (isSuccess) {
                         Get.toNamed(Routes.MENU_ITEM);
                       } else {
                         Get.toNamed(Routes.EMPTY);
                       }
                     },
-                    onTapEdit: (){},
+                    onTapEdit: () {
+                      Get.to(
+                        () => EditOrAddBranch(
+                          brandId: _homeController
+                                  .listBranchs.value[index].brandId ??
+                              "",
+                          branchID: _homeController
+                                  .listBranchs.value[index].branchId ??
+                              "",
+                          brachItem: _homeController
+                              .listBranchs.value[index],
+                        ),
+                      );
+                    },
                     label: _homeController.listBranchs.value[index].branchName,
                     address: _homeController.listBranchs.value[index].address,
                     district: _homeController.listBranchs.value[index].district,
@@ -51,7 +81,14 @@ class ListBranchsOfBrandPage extends StatelessWidget {
   }
 }
 
-Padding branchItemManagement({String? label, String? image, String? address, String? district, VoidCallback? ontap, VoidCallback? onTapEdit,}) {
+Padding branchItemManagement({
+  String? label,
+  String? image,
+  String? address,
+  String? district,
+  VoidCallback? ontap,
+  VoidCallback? onTapEdit,
+}) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
     child: Container(
@@ -111,9 +148,7 @@ Padding branchItemManagement({String? label, String? image, String? address, Str
                 borderRadius: BorderRadius.circular(100),
               ),
               child: IconButton(
-                  onPressed: onTapEdit,
-                  color: white,
-                  icon: Icon(Icons.edit))),
+                  onPressed: onTapEdit, color: white, icon: Icon(Icons.edit))),
           SizedBox(
             width: 15,
           ),

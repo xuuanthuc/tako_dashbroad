@@ -49,7 +49,6 @@ class HomeController extends GetxController {
     });
     getBanner();
     isLoading.value = false;
-
   }
 
   //TODO: Brand: tocotoco, hightland, lotte, royalte, dingtea.....
@@ -206,6 +205,27 @@ class HomeController extends GetxController {
     //   },
     // );
   }
+
+  Future<void> setNewBranch({required String branchName, required String branchAddress, required String district, required String brandId, required String branchId}) async {
+    isLoading.value = true;
+    var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/brands/$brandId/branchs/$branchId.json';
+    await Dio().patch(url, data: {
+      'branchName': branchName,
+      'address': branchAddress,
+      'district': district,
+    });
+    isLoading.value = false;
+    getBranchOfBrand(brand: brandId);
+  }
+
+  Future<void> deleteBranch({required String brandId, required String branchId}) async {
+    isLoading.value = true;
+    var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/brands/$brandId/branchs/$branchId.json';
+    await Dio().delete(url);
+    getBranchOfBrand(brand: brandId);
+    isLoading.value = false;
+  }
+
   //
   // Future<void> setNewBranchOfBrand(
   //     {required String brand,
@@ -231,23 +251,6 @@ class HomeController extends GetxController {
   //   await database.child('brands/$brand/branchs/$key/menu').push().set(newMenu);
   // }
   //
-  // Future<void> updateInfoBrand(
-  //     {required String brand, required String name}) async {
-  //   final newMenu = <String, dynamic>{
-  //     'brandName': name,
-  //     'openTime': '8:00',
-  //     'closeTime': '22:00',
-  //   };
-  //   await database.child('brands/$brand/').update(newMenu);
-  // }
-  //
-  // Future<void> setNewBrand() async {
-  //   final newBrand = {
-  //     'brands/royalTea/brandName': 'newBrand',
-  //     'brands/royalTea/thumbnail': 'hello',
-  //   };
-  //   await database.update(newBrand);
-  // }
 
   Future<void> setNewBrand({required String brandName, required String thumbnail, required String id}) async {
     isLoading.value = true;
@@ -262,6 +265,7 @@ class HomeController extends GetxController {
     isLoading.value = false;
     getAllBrand();
   }
+
 
   Future<void> deleteBrand({required String id}) async {
     isLoading.value = true;
