@@ -6,7 +6,6 @@ import 'package:tako_dashbroad/util/common/logger.dart';
 import 'package:dio/dio.dart';
 
 class HomeController extends GetxController {
-  // final database = FirebaseDatabase.instance.reference();
   RxString pathBanner1 = "https://".obs;
   RxString pathBanner2 = ''.obs;
   RxString pathBanner3 = ''.obs;
@@ -53,8 +52,6 @@ class HomeController extends GetxController {
 
   }
 
-
-
   //TODO: Brand: tocotoco, hightland, lotte, royalte, dingtea.....
 
   void getInfoBrand({required String brand}) async {
@@ -69,12 +66,6 @@ class HomeController extends GetxController {
     if (resThumb.statusCode == 200){
       thumbnailBrand.value = resThumb.data;
     }
-    // await database.child('brands/$brand/brandName').once().then((brandName) {
-    //   labelBrand.value = brandName.value;
-    // });
-    // await database.child('brands/$brand/thumbnail').once().then((thumbnail) {
-    //   thumbnailBrand.value = thumbnail.value;
-    // });
     isLoading.value = false;
   }
 
@@ -99,25 +90,6 @@ class HomeController extends GetxController {
         );
         listBranchs.value = list;
       }
-      // await database.child('brands/$brand/branchs').get().then(
-      //       (event) {
-      //     final data = Map<String, dynamic>.from(event.value);
-      //     var list = <Branch>[];
-      //     data.forEach(
-      //           (key, value) {
-      //         list.add(Branch(
-      //           branchId: key,
-      //           brandId: brand,
-      //           branchName: value['branchName'],
-      //           address: value['address'],
-      //           district: value['district'],
-      //         ));
-      //         Logger.info(value['branchName']);
-      //       },
-      //     );
-      //     listBranchs.value = list;
-      //   },
-      // );
       return true;
     }catch(e){
       return false;
@@ -276,6 +248,29 @@ class HomeController extends GetxController {
   //   };
   //   await database.update(newBrand);
   // }
+
+  Future<void> setNewBrand({required String brandName, required String thumbnail, required String id}) async {
+    isLoading.value = true;
+    var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/brands/$id.json';
+    await Dio().patch(url, data: {
+      'brandName': brandName,
+      'thumbnail': thumbnail,
+      'closeTime': '22:00',
+      'openTime': '8:00',
+    });
+    getInfoBrand(brand: id);
+    isLoading.value = false;
+    getAllBrand();
+  }
+
+  Future<void> deleteBrand({required String id}) async {
+    isLoading.value = true;
+    var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/brands/$id.json';
+    await Dio().delete(url);
+    getInfoBrand(brand: id);
+    isLoading.value = false;
+    getAllBrand();
+  }
 
   @override
   void onInit() {

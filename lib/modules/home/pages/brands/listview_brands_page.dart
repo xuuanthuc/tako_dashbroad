@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tako_dashbroad/modules/common/widgets/appbar_design.dart';
+import 'package:tako_dashbroad/modules/home/pages/brands/edit_or_addNew_brand.dart';
 import 'package:tako_dashbroad/util/common/screen_util.dart';
 import 'package:tako_dashbroad/util/theme/app_colors.dart';
 
@@ -16,7 +17,7 @@ class ListBrandsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
-      appBar: appbarDesignSimple(title: 'Brand Management', addNewItem: () {}),
+      appBar: appbarDesignSimple(title: 'Brand Management', addNewItem: () => Get.to(()=>EditOrAddBrand(brandId: "",))),
       body: ListView.builder(
         itemBuilder: (context, index) {
           return brandItemManagement(
@@ -33,7 +34,7 @@ class ListBrandsPage extends StatelessWidget {
               }
             },
             onTapEdit: (){
-
+              Get.to(()=> EditOrAddBrand(brandId: _homeController.listBrands.value[index].brandId,));
             },
             label: _homeController.listBrands.value[index].brandName ?? "",
             image: _homeController.listBrands.value[index].thumbnail ?? "",
