@@ -15,7 +15,7 @@ class ListBrandsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(()=>Scaffold(
       backgroundColor: white,
       appBar: appbarDesignSimple(title: 'Brand Management', addNewItem: () => Get.to(()=>EditOrAddBrand(brandId: "",))),
       body: ListView.builder(
@@ -42,7 +42,7 @@ class ListBrandsPage extends StatelessWidget {
         },
         itemCount: _homeController.listBrands.length,
       ),
-    );
+    ));
   }
 }
 

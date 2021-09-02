@@ -44,6 +44,8 @@ class _EditOrAddBrandState extends State<EditOrAddBrand> {
         id: getRandomString(24),
       );
     }
+    Get.back();
+
   }
 
   void deleteBrand() {
