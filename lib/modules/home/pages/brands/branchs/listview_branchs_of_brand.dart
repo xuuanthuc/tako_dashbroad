@@ -18,7 +18,7 @@ class ListBranchsOfBrandPage extends StatelessWidget {
     return Obx(()=>Scaffold(
       backgroundColor: white,
       appBar: appbarDesignSimple(title: '${_homeController.labelBrand.value} (${_homeController.listBranchs.length})', addNewItem: (){}),
-      body: _homeController.isLoading == true
+      body: _homeController.isLoading.value == true
             ? LazyLoad()
             : ListView.builder(
                 itemBuilder: (context, index) {

@@ -7,9 +7,9 @@ import 'modules/authentication/pages/forgot_password.dart';
 import 'modules/common/empty_page.dart';
 import 'modules/home/home_binding.dart';
 import 'modules/home/pages/brands/branchs/listview_branchs_of_brand.dart';
+import 'modules/home/pages/brands/branchs/menu/list_menu_management.dart';
 import 'modules/home/pages/brands/listview_brands_page.dart';
 import 'modules/home/pages/home_page.dart';
-import 'modules/order/pages/menu_page.dart';
 import 'modules/settings/setting_page.dart';
 
 abstract class Routes {
@@ -68,7 +68,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.MENU_ITEM,
-      page: () => MenuItemOfBranchPage(),
+      page: () => MenuManagement(),
       bindings: [HomeBinding()]
     ),
     GetPage(

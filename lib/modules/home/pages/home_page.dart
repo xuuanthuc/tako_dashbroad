@@ -6,8 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:tako_dashbroad/modules/common/widgets/appbar_design.dart';
 import 'package:tako_dashbroad/modules/home/home_controller.dart';
-import 'package:tako_dashbroad/modules/home/pages/widgets/category_selection_widget.dart';
-import 'package:tako_dashbroad/modules/home/pages/widgets/form_test_import_data.dart';
 import 'package:tako_dashbroad/util/common/screen_util.dart';
 import 'package:tako_dashbroad/util/theme/app_colors.dart';
 import '../../../app_pages.dart';

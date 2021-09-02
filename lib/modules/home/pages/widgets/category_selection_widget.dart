@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tako_dashbroad/util/common/screen_util.dart';
 import 'package:tako_dashbroad/util/constants/app_image.dart';
