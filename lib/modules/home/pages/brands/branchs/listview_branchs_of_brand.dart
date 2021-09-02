@@ -8,6 +8,7 @@ import 'package:tako_dashbroad/util/theme/app_colors.dart';
 
 import '../../../../../app_pages.dart';
 import '../../../home_controller.dart';
+import 'menu/edit_or_addNew_menu.dart';
 
 class ListBranchsOfBrandPage extends StatelessWidget {
   ListBranchsOfBrandPage({Key? key}) : super(key: key);
@@ -51,7 +52,13 @@ class ListBranchsOfBrandPage extends StatelessWidget {
                       if (isSuccess) {
                         Get.toNamed(Routes.MENU_ITEM);
                       } else {
-                        Get.toNamed(Routes.EMPTY);
+                        Get.to(()=> EditOrAddMenu(
+                          brandId: _homeController.listBranchs.value[index].brandId ??
+                              "",
+                          branchID: _homeController.listBranchs.value[index].branchId ??
+                              "",
+                          menuID: "",
+                        ));
                       }
                     },
                     onTapEdit: () {

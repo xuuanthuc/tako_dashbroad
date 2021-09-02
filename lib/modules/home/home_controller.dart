@@ -98,9 +98,9 @@ class HomeController extends GetxController {
   Future<bool> getMenuOfBranch({
     required String brand,
     required String idBranch,
-    required String branchName,
-    required String branchAddress,
-    required String branchDistrict,
+     String? branchName,
+     String? branchAddress,
+     String? branchDistrict,
   }) async {
     var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/brands/$brand/branchs/$idBranch/menu.json';
     print('brands/$brand/branchs/$idBranch/menu');
@@ -206,7 +206,7 @@ class HomeController extends GetxController {
     // );
   }
 
-  Future<void> setNewBranch({required String branchName, required String branchAddress, required String district, required String brandId, required String branchId}) async {
+  Future<void> setNewBranch({String? branchName, String? branchAddress, String? district, required String brandId, required String branchId}) async {
     isLoading.value = true;
     var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/brands/$brandId/branchs/$branchId.json';
     await Dio().patch(url, data: {
@@ -222,7 +222,7 @@ class HomeController extends GetxController {
     isLoading.value = true;
     var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/brands/$brandId/branchs/$branchId.json';
     await Dio().delete(url);
-    getBranchOfBrand(brand: brandId);
+    Get.back();
     isLoading.value = false;
   }
 
@@ -251,6 +251,26 @@ class HomeController extends GetxController {
   //   await database.child('brands/$brand/branchs/$key/menu').push().set(newMenu);
   // }
   //
+  Future<void> setNewMenuOfBranch({required String brandId, required String branchId, required String menuId, required String itemName, required String price,required String imageUrl,required String type}) async {
+    isLoading.value = true;
+    var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/brands/$brandId/branchs/$branchId/menu/$menuId.json';
+    await Dio().patch(url, data: {
+      'item': itemName,
+      'image': imageUrl,
+      'price': price,
+      'type': type,
+    });
+    Get.back();
+    isLoading.value = false;
+  }
+
+  Future<void> deleteMenu({required String brandId, required String branchId, required String menuId}) async {
+    isLoading.value = true;
+    var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/brands/$brandId/branchs/$branchId/menu/$menuId.json';
+    await Dio().delete(url);
+    Get.back();
+    isLoading.value = false;
+  }
 
   Future<void> setNewBrand({required String brandName, required String thumbnail, required String id}) async {
     isLoading.value = true;
