@@ -59,11 +59,19 @@ Padding menuItemManagement(
     required String itemType,
     required VoidCallback ontap}) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
     child: Container(
       decoration: BoxDecoration(
-        color: greySmall,
-        borderRadius: BorderRadius.circular(5),
+        color: white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.25),
+            spreadRadius: 2,
+            blurRadius: 2,
+            offset: Offset(4, 4), // changes position of shadow
+          ),
+        ],
       ),
       height: 88,
       child: Row(
@@ -117,7 +125,7 @@ Padding menuItemManagement(
           SizedBox(width: 10),
           Container(
               decoration: BoxDecoration(
-                color: lowBlack,
+                color: orange,
                 borderRadius: BorderRadius.circular(100),
               ),
               child: IconButton(

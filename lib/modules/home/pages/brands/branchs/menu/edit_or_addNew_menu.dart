@@ -27,6 +27,7 @@ class _EditOrAddBrandState extends State<EditOrAddMenu> {
   final HomeController _homeController = Get.find();
   final TextEditingController itemNameText = TextEditingController();
   final TextEditingController imageUrlText = TextEditingController();
+  final TextEditingController descriptionText = TextEditingController();
   final TextEditingController priceItemText = TextEditingController();
   final TextEditingController typeText = TextEditingController();
 
@@ -36,8 +37,9 @@ class _EditOrAddBrandState extends State<EditOrAddMenu> {
         itemName: itemNameText.text,
         branchId: widget.branchID ?? "",
         brandId: widget.brandId ?? "",
+        description: descriptionText.text,
         price: priceItemText.text,
-        type: typeText.text,
+        type: typeText.text.trim(),
         imageUrl: imageUrlText.text,
         menuId: widget.menuID ?? "",
       );
@@ -53,7 +55,8 @@ class _EditOrAddBrandState extends State<EditOrAddMenu> {
         branchId: widget.branchID ?? "",
         brandId: widget.brandId ?? "",
         price: priceItemText.text,
-        type: typeText.text,
+        type: typeText.text.trim(),
+        description: descriptionText.text,
         imageUrl: imageUrlText.text,
         menuId: getRandomString(24),
       );
@@ -103,6 +106,7 @@ class _EditOrAddBrandState extends State<EditOrAddMenu> {
         imageUrlText.text = widget.menuItem!.image ?? "";
         priceItemText.text = widget.menuItem!.price ?? "";
         typeText.text = widget.menuItem!.type ?? "";
+        descriptionText.text = widget.menuItem!.description ?? "";
       }
       return _homeController.isLoading.value == true
           ? LazyLoad()
@@ -169,9 +173,24 @@ class _EditOrAddBrandState extends State<EditOrAddMenu> {
                           height: 20,
                         ),
                         TextField(
+                          controller: descriptionText,
+                          decoration: InputDecoration(
+                            hintText: 'Mô tả',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: lowBlack),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: orange),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextField(
                           controller: typeText,
                           decoration: InputDecoration(
-                            hintText: 'Loại đồ',
+                            hintText: 'Loại đồ: milkTea/ coffee/ food',
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: lowBlack),
                             ),

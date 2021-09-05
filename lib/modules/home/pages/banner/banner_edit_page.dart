@@ -49,11 +49,19 @@ class BannerManagement extends StatelessWidget {
 
   Widget bannerItemDesign({required String urlImage, required TextEditingController controller}) {
     return Padding(
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       child: Container(
         decoration: BoxDecoration(
+          color: white,
           borderRadius: BorderRadius.circular(10),
-          color: greySmall,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.25),
+              spreadRadius: 2,
+              blurRadius: 2,
+              offset: Offset(4, 4), // changes position of shadow
+            ),
+          ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -95,7 +103,7 @@ class BannerManagement extends StatelessWidget {
             ),
             Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10), color: lowBlack),
+                    borderRadius: BorderRadius.circular(10), color: orange),
                 child: IconButton(
                     onPressed: () => _homeController.updateBanner(
                         urlBanner1: banner1TextController.text,

@@ -97,11 +97,20 @@ Padding branchItemManagement({
   VoidCallback? onTapEdit,
 }) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
     child: Container(
-      height: 70,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: greySmall),
+        color: white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.25),
+            spreadRadius: 2,
+            blurRadius: 2,
+            offset: Offset(4, 4), // changes position of shadow
+          ),
+        ],
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -151,7 +160,7 @@ Padding branchItemManagement({
           ),
           Container(
               decoration: BoxDecoration(
-                color: lowBlack,
+                color: orange,
                 borderRadius: BorderRadius.circular(100),
               ),
               child: IconButton(
@@ -161,7 +170,7 @@ Padding branchItemManagement({
           ),
           Container(
               decoration: BoxDecoration(
-                color: lowBlack,
+                color: orange,
                 borderRadius: BorderRadius.circular(100),
               ),
               child: IconButton(

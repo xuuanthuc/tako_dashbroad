@@ -2,6 +2,7 @@
 
 import 'package:get/get.dart';
 import 'package:tako_dashbroad/models/brand_model.dart';
+import 'package:tako_dashbroad/models/common/category_menu_item.dart';
 import 'package:tako_dashbroad/util/common/logger.dart';
 import 'package:dio/dio.dart';
 
@@ -14,7 +15,7 @@ class HomeController extends GetxController {
   var listBranchs = <Branch>[].obs;
   var listMenu = <MenuItem>[].obs;
   var branch = Branch().obs;
-
+  var listCategoryMenu = <CategoryMenu>[].obs;
   RxString labelBrand = ''.obs;
   RxString thumbnailBrand = ''.obs;
 
@@ -119,6 +120,7 @@ class HomeController extends GetxController {
               item: value['item'],
               price: value['price'],
               image: value['image'],
+              description: value['description'],
               type: value['type'],
               branchName: branchName,
               address: branchAddress,
@@ -129,30 +131,6 @@ class HomeController extends GetxController {
         );
         listMenu.value = list;
       }
-      // await database.child('brands/$brand/branchs/$idBranch/menu').get().then(
-      //       (event) {
-      //     final data = Map<String, dynamic>.from(event.value);
-      //     var list = <MenuItem>[];
-      //     data.forEach(
-      //           (key, value) {
-      //         list.add(MenuItem(
-      //           branchId: idBranch,
-      //           brandId: brand,
-      //           menuId: key,
-      //           item: value['item'],
-      //           price: value['price'],
-      //           image: value['image'],
-      //           type: value['type'],
-      //           branchName: branchName,
-      //           address: branchAddress,
-      //           district: branchDistrict,
-      //         ));
-      //         Logger.info("${value['item']}: ID: ${key}");
-      //       },
-      //     );
-      //     listMenu.value = list;
-      //   },
-      // );
       isLoading.value = false;
       return true;
     }catch(e){
@@ -162,6 +140,61 @@ class HomeController extends GetxController {
     }
 
   }
+
+  Future<bool> getCategoryMenu({required String categoryKey}) async {
+    var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/category/$categoryKey/menu.json';
+    try{
+      isLoading.value = true;
+      var res = await Dio().get(url);
+      if(res.statusCode == 200){
+        var data = Map<String, dynamic>.from(res.data);
+        var list = <CategoryMenu>[];
+        data.forEach((key, value) {
+          Logger.info(key);
+          list.add(
+            CategoryMenu(
+              id: key,
+              categoryType: categoryKey,
+              image: value['imageUrl'],
+              item: value['item'],
+              price: value['price'],
+              address: value['address'],
+              description: value['description'],
+            ),
+          );
+        });
+        listCategoryMenu.value = list;
+      }
+      isLoading.value = false;
+      return true;
+    }catch(e){
+      isLoading.value = false;
+      return false;
+    }
+  }
+
+  Future<void> setNewCategoryMenu({required String categoryType,required String description, required String menuId, required String itemName, required String price,required String imageUrl,required String address}) async {
+    isLoading.value = true;
+    var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/category/$categoryType/menu/$menuId.json';
+    await Dio().patch(url, data: {
+      'item': itemName,
+      'imageUrl': imageUrl,
+      'price': price,
+      'description': description,
+      'address': address,
+    });
+    getCategoryMenu(categoryKey: categoryType);
+    isLoading.value = false;
+  }
+
+  Future<void> deleteCategoryMenu({required String categoryType, required String menuId}) async {
+    isLoading.value = true;
+    var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/category/$categoryType/menu/$menuId.json';
+    await Dio().delete(url);
+    Get.back();
+    isLoading.value = false;
+  }
+
 
   Future<void> getAllBrand() async {
     var urlBranchs = 'https://tako-5d6a2-default-rtdb.firebaseio.com/brands.json';
@@ -186,24 +219,6 @@ class HomeController extends GetxController {
     }catch(e){
 
     }
-    // database.child('brands').get().then(
-    //   (event) {
-    //     final data = Map<String, dynamic>.from(event.value);
-    //     var list = <Brand>[];
-    //     data.forEach(
-    //       (key, value) {
-    //         Logger.info(key);
-    //         list.add(Brand(
-    //             brandId: key,
-    //             brandName: value['brandName'],
-    //             thumbnail: value['thumbnail'],
-    //             closeTime: value['closeTime'],
-    //             openTime: value['openTime']));
-    //       },
-    //     );
-    //     listBrands.value = list;
-    //   },
-    // );
   }
 
   Future<void> setNewBranch({String? branchName, String? branchAddress, String? district, required String brandId, required String branchId}) async {
@@ -226,41 +241,17 @@ class HomeController extends GetxController {
     isLoading.value = false;
   }
 
-  //
-  // Future<void> setNewBranchOfBrand(
-  //     {required String brand,
-  //     required String name,
-  //     required String address,
-  //     required String district}) async {
-  //   final newBranch = <String, dynamic>{
-  //     'branchName': name,
-  //     'address': address,
-  //     'district': district,
-  //   };
-  //   await database.child('brands/$brand/branchs').push().set(newBranch);
-  // }
-  //
-  // Future<void> setNewMenuOfBranch(
-  //     {required String key, required String brand}) async {
-  //   final newMenu = <String, dynamic>{
-  //     'item': 'Hồng Long Xoài Trân Châu Baby',
-  //     'image': 'https://tocotocotea.com/wp-content/uploads/2021/01/ezgif.com-gif-maker-1.jpg',
-  //     'price': '22.0000',
-  //     'type': 'milkTea',
-  //   };
-  //   await database.child('brands/$brand/branchs/$key/menu').push().set(newMenu);
-  // }
-  //
-  Future<void> setNewMenuOfBranch({required String brandId, required String branchId, required String menuId, required String itemName, required String price,required String imageUrl,required String type}) async {
+  Future<void> setNewMenuOfBranch({required String brandId, required String branchId,required String description, required String menuId, required String itemName, required String price,required String imageUrl,required String type}) async {
     isLoading.value = true;
     var url = 'https://tako-5d6a2-default-rtdb.firebaseio.com/brands/$brandId/branchs/$branchId/menu/$menuId.json';
     await Dio().patch(url, data: {
       'item': itemName,
       'image': imageUrl,
       'price': price,
+      'description': description,
       'type': type,
     });
-    Get.back();
+    getMenuOfBranch(brand: brandId, idBranch: branchId);
     isLoading.value = false;
   }
 

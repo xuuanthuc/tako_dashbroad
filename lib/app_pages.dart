@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:tako_dashbroad/modules/home/pages/banner/banner_edit_page.dart';
 import 'package:tako_dashbroad/modules/home/pages/brands/edit_or_addNew_brand.dart';
+import 'package:tako_dashbroad/modules/home/pages/categories/list_categories_page.dart';
+import 'package:tako_dashbroad/modules/home/pages/categories/list_menu.dart';
 
 import 'modules/authentication/auth_binding.dart';
 import 'modules/authentication/pages/auth_page.dart';
@@ -24,6 +26,8 @@ abstract class Routes {
   static const SETTING = '/setting';
   static const EMPTY = '/empty-page';
   static const EDIT_BRAND = '/edit-brand-page';
+  static const CATEGORY = '/list-category-page';
+  static const CATEGORY_MENU = '/list-menu-category-page';
 
 
   static const BANNER_MANAGEMENT = '/BannerManagement-page';
@@ -82,6 +86,16 @@ class AppPages {
     GetPage(
       name: Routes.EDIT_BRAND,
       page: () => EditOrAddBrand(),
+      bindings: [HomeBinding()],
+    ),
+    GetPage(
+      name: Routes.CATEGORY,
+      page: () => ListCategoriesScreen(),
+      bindings: [HomeBinding()],
+    ),
+    GetPage(
+      name: Routes.CATEGORY_MENU,
+      page: () => MenuListCategory(),
       bindings: [HomeBinding()],
     ),
   ];

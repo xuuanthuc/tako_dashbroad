@@ -61,6 +61,7 @@ class MenuItem {
   String? brandId;
   String? branchId;
   String? item;
+  String? description;
   String? price;
   String? menuId;
   String? image;
@@ -74,6 +75,7 @@ class MenuItem {
       this.menuId,
       this.price,
       this.image,
+      this.description,
       this.branchId,
       this.brandId,
       this.branchName,
