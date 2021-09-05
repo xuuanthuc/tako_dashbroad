@@ -42,55 +42,85 @@ class HomePage extends StatelessWidget {
         }),
         body: WillPopScope(
           onWillPop: _onBackPressed,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: height(65)),
-                Container(
-                  height: 300,
-                  color: Colors.red,
+          child: ListView(
+            children: [
+              SizedBox(height: height(65)),
+              Text('So luong brand: ${_homeController.listBrands.length}'),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.25),
+                        spreadRadius: 2,
+                        blurRadius: 2,
+                        offset: Offset(4, 4), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: TextButton(
                     onPressed: ()=> Get.toNamed(Routes.BANNER_MANAGEMENT),
-                    child: Text("Banner "),
+                    child: Text("Banner"),
                   ),
                 ),
-                // CategorySelectionDesgin(),
-                TextButton.icon(
-                  onPressed: () {
-                    Get.toNamed(Routes.LISTBRANDS);
-                  },
-                  icon: Icon(
-                    Icons.arrow_drop_down_circle_outlined,
-                    color: lowBlack,
-                    size: size(18),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.25),
+                        spreadRadius: 2,
+                        blurRadius: 2,
+                        offset: Offset(4, 4), // changes position of shadow
+                      ),
+                    ],
                   ),
-                  label: Text(
-                    "Xem tất cả nhan hieu",
-                    style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                            fontSize: size(14),
-                            fontWeight: FontWeight.w700,
-                            color: lowBlack)),
+                  child: TextButton(
+                    onPressed: ()=> Get.toNamed(Routes.LISTBRANDS),
+                    child: Text("branchs"),
                   ),
                 ),
-                Container(
-                  height: 300,
-                  color: Colors.orange,
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.25),
+                        spreadRadius: 2,
+                        blurRadius: 2,
+                        offset: Offset(4, 4), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: TextButton(
                     onPressed: ()=> Get.toNamed(Routes.CATEGORY),
-                    child: Text("New branchs"),
+                    child: Text("Category"),
                   ),
                 ),
-                // Container(
-                //   height: 300,
-                //   color: Colors.red,
-                // ),
-                // Container(
-                //   height: 300,
-                //   color: Colors.red,
-                // ),
-              ],
-            ),
+              ),
+              // Container(
+              //   height: 300,
+              //   color: Colors.red,
+              // ),
+              // Container(
+              //   height: 300,
+              //   color: Colors.red,
+              // ),
+            ],
           ),
         ));
   }

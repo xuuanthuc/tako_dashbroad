@@ -5,6 +5,7 @@ import 'package:tako_dashbroad/models/brand_model.dart';
 import 'package:tako_dashbroad/models/common/category_menu_item.dart';
 import 'package:tako_dashbroad/util/common/logger.dart';
 import 'package:dio/dio.dart';
+import 'package:tako_dashbroad/util/constants/locale_keys.dart';
 
 class HomeController extends GetxController {
   RxString pathBanner1 = "https://".obs;
