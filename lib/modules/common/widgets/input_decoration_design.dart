@@ -8,10 +8,11 @@ InputDecoration decorTextField(String hintText) {
       focusedBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: orange),
       ),
+
       hintText: hintText,
       hintStyle: GoogleFonts.roboto(
           textStyle: TextStyle(
-              fontSize: size(14),
+              fontSize: size(20),
               fontWeight: FontWeight.w500,
               color: lowGrey)));
 }

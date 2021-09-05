@@ -27,16 +27,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
   bool isLoading = false;
 
-  void tapLogin() {
-    _authController.isLogin.value = true;
-    print('login');
-  }
-
-  void tapRegister() {
-    _authController.isLogin.value = false;
-    print('register');
-  }
-
   Future<void> submitAuthentication() async {
     if (!_authController.formPass.currentState!.validate() &&
         !_authController.formUser.currentState!.validate()) {
@@ -47,7 +37,7 @@ class _AuthScreenState extends State<AuthScreen> {
         isLoading = true;
       });
       await Future.delayed(Duration(seconds: 1));
-      // _authController.sumbit();
+      _authController.sumbit();
       setState(() {
         isLoading = false;
       });
@@ -79,67 +69,25 @@ class _AuthScreenState extends State<AuthScreen> {
                       width: width(187),
                       child: Image.asset(
                         AppFileName.logoOrange,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.fitHeight,
                       ),
                     ),
                   ],
                 ),
                 SizedBox(height: height(57)),
-                Row(
-                  //Hang chon loai dang nhap dang ky
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Obx(
-                      () => loginRegisterBtn(
-                          isLogin: _authController.isLogin.value,
-                          label: 'Đăng nhập',
-                          ontap: () => tapLogin()),
-                    ),
-                    Obx(
-                      () => loginRegisterBtn(
-                          isLogin: !_authController.isLogin.value,
-                          label: 'Đăng ký',
-                          ontap: () => tapRegister()),
-                    )
-                  ],
-                ),
                 SizedBox(height: height(15)),
-                Stack(
-                  children: [
-                    Obx(
-                      () => AnimatedOpacity(
-                        child: Visibility(
-                            visible: _authController.isLogin.value,
-                            child: FormLoginWidget()),
-                        opacity: _authController.isLogin.value ? 1.0 : 0.0,
-                        duration: Duration(milliseconds: 500),
-                      ),
-                    ),
-                    Obx(
-                      () => AnimatedOpacity(
-                        child: Visibility(
-                            visible: !_authController.isLogin.value,
-                            child: FormRegisterWidget()),
-                        opacity: !_authController.isLogin.value ? 1.0 : 0.0,
-                        duration: Duration(milliseconds: 500),
-                      ),
-                    ),
-                  ],
-                ),
+                FormLoginWidget(),
                 SizedBox(height: height(40)),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: width(65), vertical: height(30)),
-                  child: Obx(
-                    () => CustumButtonDesign(
+                  child: CustumButtonDesign(
                         ontap: () {
                           FocusScope.of(context).unfocus();
                           submitAuthentication();
                         },
-                        label: _authController.isLogin == true
-                            ? 'Đăng nhập'
-                            : 'Đăng ký'),
-                  ),
+                        label: 'Đăng nhập'
+                    ),
                 ),
               ],
             ),

@@ -45,7 +45,6 @@ class HomePage extends StatelessWidget {
           child: ListView(
             children: [
               SizedBox(height: height(65)),
-              Text('So luong brand: ${_homeController.listBrands.length}'),
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Container(

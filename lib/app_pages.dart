@@ -36,7 +36,7 @@ abstract class Routes {
 }
 
 class AppPages {
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.AUTH;
 
   static final routes = [
     GetPage(
